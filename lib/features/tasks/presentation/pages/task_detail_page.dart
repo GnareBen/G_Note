@@ -92,6 +92,13 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                 ),
               ],
             ),
+            const SizedBox(width: 8),
+            Text(
+              widget.task != null && !widget.task!.is_synced
+                  ? '(Non synchronisé)'
+                  : '',
+              style: theme.textTheme.bodySmall,
+            ),
             const Spacer(),
             SizedBox(
               width: double.infinity,

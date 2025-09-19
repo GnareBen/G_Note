@@ -82,19 +82,22 @@ class TaskRepositoryImpl implements TaskRepository {
   @override
   Future<Either<Failure, void>> syncTasks() async {
     try {
-      // Get unsynced tasks
+      // Récupérer les tâches non synchronisées
       final unsyncedTasks = await localDataSource.getUnsyncedTasks();
 
       if (unsyncedTasks.isEmpty) {
         return const Right(null);
       }
 
-      // Sync with remote
-      final syncedTasks = await remoteDataSource.syncTasks(unsyncedTasks);
+      // Synchroniser les tâches avec la source distante
+      await remoteDataSource.syncTasks(unsyncedTasks);
 
-      // Mark tasks as synced
-      final syncedIds = syncedTasks.map((task) => task.id).toList();
-      await localDataSource.markTasksAsSynced(syncedIds);
+      // Marquer les tâches comme synchronisées localement
+      if (unsyncedTasks.isNotEmpty) {
+        final syncedIds = unsyncedTasks.map((task) => task.id).toList();
+        await localDataSource.markTasksAsSynced(syncedIds);
+        return const Right(null);
+      }
 
       return const Right(null);
     } on ServerException catch (e) {

@@ -13,7 +13,7 @@ import 'features/tasks/domain/usecases/get_tasks.dart';
 import 'features/tasks/domain/usecases/syn_tasks.dart';
 import 'features/tasks/domain/usecases/update_task.dart';
 
-final sl = GetIt.instance;
+final GetIt sl = GetIt.instance;
 
 Future<void> init() async {
   // Bloc

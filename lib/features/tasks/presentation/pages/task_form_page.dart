@@ -70,29 +70,34 @@ class _TaskFormPageState extends State<TaskFormPage> {
         title: Text(isEditing ? 'Modifier la tâche' : 'Nouvelle tâche'),
         centerTitle: true,
       ),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            CustomTextFormField(
-              label: 'Titre',
-              verticalPadding: 12,
-              horizontalPadding: 12,
-              controller: _titleController,
-              validator: (value) => Validators.title(value),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              spacing: 8.0,
+              children: [
+                CustomTextFormField(
+                  label: 'Titre',
+                  verticalPadding: 12,
+                  horizontalPadding: 12,
+                  controller: _titleController,
+                  validator: (value) => Validators.title(value),
+                ),
+                const SizedBox(height: 16),
+                CustomTextFormField(
+                  hint: 'Description',
+                  horizontalPadding: 12,
+                  controller: _descriptionController,
+                  validator: (value) => Validators.description(value),
+                  maxLines: 15,
+                  keyboardType: TextInputType.multiline,
+                  label: '',
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            CustomTextFormField(
-              hint: 'Description',
-              horizontalPadding: 12,
-              controller: _descriptionController,
-              validator: (value) => Validators.description(value),
-              maxLines: 15,
-              keyboardType: TextInputType.multiline,
-              label: '',
-            ),
-          ],
+          ),
         ),
       ),
 
